@@ -7,6 +7,8 @@ import loginBg from '../images/login_page_background.jpg';
 
 export default function SignUpPage() {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');            // ✅ NEW: email state
+  const [role, setRole] = useState('User');          // ✅ NEW: role state (default User)
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -24,8 +26,13 @@ export default function SignUpPage() {
 
     setError(null);
     try {
-      // ⬇️ Adjust endpoint to match your backend (e.g., /auth/register)
-      const res = await api.post('/auth/signup', { username, password });
+      // ⬇️ Send email and role to backend along with username/password
+      const res = await api.post('/auth/signup', {
+        username,
+        email,
+        role,       // "User" or "Merchant"
+        password,
+      });
 
       // If your API returns a token upon signup, store and redirect
       const { token, username: uname } = res.data || {};
@@ -61,10 +68,11 @@ export default function SignUpPage() {
         {/* RIGHT: Form */}
         <section className="LoginRight">
           <div className="LoginCard">
-            <h1 className="h1_label"><i>ShopSphere</i></h1>
-            <h4 className="h1_label"><i>Sign up today for exciting offers</i></h4>
+            {/* <h1 className="h1_label"><i>ShopSphere</i></h1> */}
+            <h2 className="h1_label"><i>Please Enter Your Details</i></h2>
 
-            <form onSubmit={submit} className="LoginForm">
+            <form onSubmit={submit} className="LoginForm" noValidate>
+              {/* Username */}
               <div className="FormRow">
                 <label htmlFor="username"><b>&nbsp;&nbsp;&nbsp;&nbsp;Username</b></label>
                 <input
@@ -77,6 +85,7 @@ export default function SignUpPage() {
                 />
               </div>
 
+              {/* Password */}
               <div className="FormRow">
                 <label htmlFor="password"><b>&nbsp;&nbsp;&nbsp;&nbsp;Password</b></label>
                 <input
@@ -89,6 +98,37 @@ export default function SignUpPage() {
                   required
                 />
               </div>
+
+              {/* ✅ Role */}
+              <div className="FormRow">
+                <label htmlFor="role"><b>&nbsp;&nbsp;&nbsp;&nbsp;Role</b></label>
+                <select
+                  id="role"
+                  className="input1"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  required
+                >
+                  <option value="User">User</option>
+                  <option value="Merchant">Merchant</option>
+                </select>
+              </div>
+
+              {/* ✅ Email */}
+              <div className="FormRow">
+                <label htmlFor="email"><b>&nbsp;&nbsp;&nbsp;&nbsp;Email</b></label>
+                <input
+                  id="email"
+                  className="input1"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  autoComplete="email"
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+
 
               <button className="submit1" type="submit">Register</button>
             </form>
