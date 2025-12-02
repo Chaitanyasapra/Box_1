@@ -195,3 +195,16 @@ box-shadow:
   padding: 24px;
   background: #fff;    /* clean background for the form */
 }
+
+html, body{
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar{
+  display: none;
+}
+
+html, body{
+  overflow-x: hidden;
+}
