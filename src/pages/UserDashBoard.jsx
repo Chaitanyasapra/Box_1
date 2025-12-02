@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import profileAvatar from '../images/blank_1.avif';
 import SearchBar from "../components/SearchBar";
+import {Link} from 'react-router-dom';
 
 const categories = [
   "All",
@@ -56,7 +57,8 @@ export default function UserDashboard() {
           <button>
             <img src={profileAvatar} alt="Profile" className="h-6 w-6 rounded-full object-cover" loading="lazy"/>
           </button>
-          <button>🛒</button>
+           <Link to="/cart" className="nav-cart-icon">🛒</Link>
+          <Link to="/wishlist" className="nav-cart-icon">❤️</Link>
         </div>
       </nav>
 
